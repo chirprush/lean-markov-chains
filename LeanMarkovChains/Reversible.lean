@@ -22,6 +22,7 @@ theorem reversible_dist_stationary
 -- like M.IsReversible.convergence_bound
 theorem reversible_convergence_bound
   {M : MarkovChain α} {p : ProbDistribution α}
+  (hIrred : M.IsIrreducible) (hAper : M.IsAperiodic)
   (hRev : M.IsReversible p) :
   ∀ t > 0, ∀ x y, ∃ C > 0, |((M.P ^ t) x y) / (p.π y) - 1| ≤ C * (1 - M.SpectralGap) ^ t := by
   sorry

@@ -21,13 +21,15 @@ def IsNonnegative (P : Matrix α α ℝ) := ∀ x y : α, P x y ≥ 0
 def IsRowSumOne (P : Matrix α α ℝ) := ∀ x : α, ∑ y : α, P x y = 1
 def IsStochastic (P : Matrix α α ℝ) := P.IsNonnegative ∧ P.IsRowSumOne
 
-theorem IsPositive.mul_of_isStochastic {P Q : Matrix α α ℝ}
-  (hP : P.IsPositive) (hQ : Q.IsStochastic) :
-  Matrix.IsPositive (P • Q) :=
-  sorry
+-- theorem IsPositive.mul_of_isStochastic {P Q : Matrix α α ℝ}
+--   (hP : P.IsPositive) (hQ : Q.IsStochastic) :
+--   Matrix.IsPositive (P • Q) :=
+--   sorry
 
--- TODO: Add some more theorems so that we know higher powers of transition matrices
--- are also stochastic
+theorem IsStochastic.mul_of_isStochastic {P Q : Matrix α α ℝ}
+  (hP : P.IsStochastic) (hQ : Q.IsStochastic) :
+  (P • Q).IsStochastic := by
+  sorry
 
 end Matrix
 
@@ -47,7 +49,29 @@ namespace MarkovChain
 
 -- TODO: Maybe also add some information about nth iterates
 def evolve (M : MarkovChain α) (p : ProbDistribution α) : ProbDistribution α :=
-  { π := Matrix.vecMul p.π M.P, nonneg := by sorry, sum_one := by sorry }
+{
+  π := Matrix.vecMul p.π M.P
+  nonneg := by
+    intro i
+    unfold Matrix.vecMul dotProduct
+    simp only [ge_iff_le]
+    apply Finset.sum_nonneg
+    intro x hx
+    apply mul_nonneg
+    · exact p.nonneg x
+    · exact M.nonneg x i
+  sum_one := by
+    unfold Matrix.vecMul dotProduct
+    simp only
+    rw [Finset.sum_comm]
+    conv =>
+      lhs
+      arg 2
+      ext y
+      rw [← Finset.mul_sum, M.row_sum_one]
+      simp
+    rw [p.sum_one]
+}
 
 theorem evolve_eq_matmul (M : MarkovChain α) (p : ProbDistribution α) :
   Matrix.vecMul p.π M.P = (M.evolve p).π := by

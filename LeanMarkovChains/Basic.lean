@@ -26,13 +26,35 @@ def IsStochastic (P : Matrix α α ℝ) := P.IsNonnegative ∧ P.IsRowSumOne
 --   Matrix.IsPositive (P • Q) :=
 --   sorry
 
-theorem IsStochastic.mul_of_isStochastic {P Q : Matrix α α ℝ}
-  (hP : P.IsStochastic) (hQ : Q.IsStochastic) :
-  (P • Q).IsStochastic := by
-  sorry
+-- theorem IsStochastic.mul_of_isStochastic {P Q : Matrix α α ℝ}
+--   (hP : P.IsStochastic) (hQ : Q.IsStochastic) :
+--   (P * Q).IsStochastic := by
+--   sorry
+
+theorem IsNonnegative.pow {P : Matrix α α ℝ} {k : ℕ}
+  (hP : P.IsNonnegative) :
+  (P ^ k).IsNonnegative := by
+  induction k with
+  | zero =>
+    simp only [pow_zero]
+    unfold Matrix.IsNonnegative
+    intro x y
+    by_cases h : x = y <;>
+    · simp [Matrix.one_apply, h]
+  | succ d hd =>
+    rw [pow_add, pow_one]
+    unfold Matrix.IsNonnegative
+    intro x y
+    rw [Matrix.mul_apply]
+    apply Finset.sum_nonneg
+    intro i hi
+    apply mul_nonneg
+    · unfold Matrix.IsNonnegative at hd
+      exact hd x i
+    · unfold Matrix.IsNonnegative at hP
+      exact hP i y
 
 end Matrix
-
 
 -- Given a suitable measure, one can drop the Fintype condition for α
 structure MarkovChain (α : Type u) [Fintype α] [DecidableEq α] where

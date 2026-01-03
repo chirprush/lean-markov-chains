@@ -74,11 +74,13 @@ theorem IsRowSumOne.one : (1 : Matrix α α ℝ).IsRowSumOne := by
 end Matrix
 
 -- Given a suitable measure, one can drop the Fintype condition for α
+@[ext]
 structure MarkovChain (α : Type u) [Fintype α] [DecidableEq α] where
 (P : Matrix α α ℝ)
 (nonneg : P.IsNonnegative)
 (row_sum_one : P.IsRowSumOne)
 
+@[ext]
 structure ProbDistribution (α : Type u) [Fintype α] [DecidableEq α] where
 (π : α → ℝ)
 (nonneg : ∀ i, π i ≥ 0)
@@ -126,5 +128,21 @@ theorem evolve_eq_weighted_sum (M : MarkovChain α) (p : ProbDistribution α) :
   simp_rw [mul_comm]
 
 end MarkovChain
+
+namespace ProbDistribution
+
+theorem has_pos_entry (p : ProbDistribution α) :
+  ∃ x, p.π x > 0 := by
+  by_contra h
+  simp only [gt_iff_lt, not_exists, not_lt] at h
+  have h0 : ∀ x, p.π x = 0 := by
+    intro x
+    linarith [h x, p.nonneg x]
+  have hsum : ∑ x, p.π x = 0 := by
+    simp [h0]
+  absurd hsum
+  simp [p.sum_one]
+
+end ProbDistribution
 
 end

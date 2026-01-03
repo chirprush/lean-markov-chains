@@ -12,7 +12,7 @@ namespace MarkovChain
 def IsReversible (M : MarkovChain α) (p : ProbDistribution α) :=
   ∀ x y, (p.π x) * (M.P x y) = (p.π y) * (M.P y x)
 
-theorem reversible_dist_stationary
+theorem IsReversible.has_stationary
   {M : MarkovChain α} {p : ProbDistribution α}
   (hRev : M.IsReversible p) :
   M.HasStationary p := by
@@ -20,7 +20,7 @@ theorem reversible_dist_stationary
 
 -- TODO: Make stuff like this more ergonomic. We should be able to do something
 -- like M.IsReversible.convergence_bound
-theorem reversible_convergence_bound
+theorem IsReversible.convergence_bound
   {M : MarkovChain α} {p : ProbDistribution α}
   (hIrred : M.IsIrreducible) (hAper : M.IsAperiodic)
   (hRev : M.IsReversible p) :

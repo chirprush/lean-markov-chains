@@ -58,7 +58,7 @@ lemma reachable_period_dvd {M : MarkovChain α} {x y : α}
 
 theorem irreducible_same_periods {M : MarkovChain α} (h : M.IsIrreducible) (x y : α) :
   M.Period x = M.Period y := by
-  rw [MarkovChain.irreducible_iff_reachable] at h
+  rw [MarkovChain.IsIrreducible.iff_all_reachable] at h
   exact Nat.dvd_antisymm
     (MarkovChain.reachable_period_dvd (h x y) (h y x))
     (MarkovChain.reachable_period_dvd (h y x) (h x y))

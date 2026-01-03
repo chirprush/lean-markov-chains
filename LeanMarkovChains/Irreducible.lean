@@ -13,7 +13,7 @@ def Reachable (M : MarkovChain α) (x y : α) :=
 def IsIrreducible (M : MarkovChain α) :=
   ∀ x y : α, ∃ k > 0, 0 < (M.P ^ k) x y
 
-theorem irreducible_iff_reachable (M : MarkovChain α) :
+theorem IsIrreducible.iff_all_reachable (M : MarkovChain α) :
   M.IsIrreducible ↔ ∀ x y : α, M.Reachable x y := by
   rfl
 
@@ -31,7 +31,7 @@ theorem path_prob_le_all
     (by intro i hi; simp_rw [h1])
     (Finset.mem_univ y)
 
-theorem reachable_transitive
+theorem Reachable.trans
   {M : MarkovChain α} {x y z : α}
   (h1 : M.Reachable x y) (h2 : M.Reachable y z) :
   M.Reachable x z := by

@@ -31,16 +31,19 @@ def IsStochastic (P : Matrix α α ℝ) := P.IsNonnegative ∧ P.IsRowSumOne
 --   (P * Q).IsStochastic := by
 --   sorry
 
+theorem IsNonnegative.one {β : Type u} [DecidableEq β] : (1 : Matrix β β ℝ).IsNonnegative := by
+  unfold Matrix.IsNonnegative
+  intro x y
+  by_cases h : x = y <;>
+    simp [Matrix.one_apply, h]
+
 theorem IsNonnegative.pow {P : Matrix α α ℝ} {k : ℕ}
   (hP : P.IsNonnegative) :
   (P ^ k).IsNonnegative := by
   induction k with
   | zero =>
     simp only [pow_zero]
-    unfold Matrix.IsNonnegative
-    intro x y
-    by_cases h : x = y <;>
-    · simp [Matrix.one_apply, h]
+    exact Matrix.IsNonnegative.one
   | succ d hd =>
     rw [pow_add, pow_one]
     unfold Matrix.IsNonnegative
@@ -53,6 +56,20 @@ theorem IsNonnegative.pow {P : Matrix α α ℝ} {k : ℕ}
       exact hd x i
     · unfold Matrix.IsNonnegative at hP
       exact hP i y
+
+theorem IsRowSumOne.one : (1 : Matrix α α ℝ).IsRowSumOne := by
+  unfold Matrix.IsRowSumOne
+  intro x
+  have h : ∑ y, (1 : Matrix α α ℝ) x y = (1 : Matrix α α ℝ) x x := by
+    refine Finset.sum_eq_single x ?_ ?_
+    · intro b hb
+      rw [Matrix.one_apply]
+      intro hne
+      exact if_neg hne.symm
+    · intro hx
+      simp at hx
+  rw [h, Matrix.one_apply]
+  simp
 
 end Matrix
 

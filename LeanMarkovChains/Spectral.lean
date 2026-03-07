@@ -1,7 +1,9 @@
-import Mathlib
-import LeanMarkovChains.Basic
-import LeanMarkovChains.Irreducible
 import LeanMarkovChains.Period
+import Mathlib.Algebra.Polynomial.Roots
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
 
 universe u
 

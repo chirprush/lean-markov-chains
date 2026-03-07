@@ -1,7 +1,5 @@
-import Mathlib
-import LeanMarkovChains.Basic
-import LeanMarkovChains.StationaryDistribution
 import LeanMarkovChains.Spectral
+import LeanMarkovChains.StationaryDistribution
 
 universe u
 

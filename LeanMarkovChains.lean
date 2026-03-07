@@ -1,4 +1,10 @@
 import LeanMarkovChains.Basic
+import LeanMarkovChains.Irreducible
+import LeanMarkovChains.Lazy
+import LeanMarkovChains.Period
+import LeanMarkovChains.Reversible
+import LeanMarkovChains.Spectral
+import LeanMarkovChains.StationaryDistribution
 
 -- TODO: Add stuff about spectral (figure this out) and reversibility
 -- And maybe some theorems about laziness

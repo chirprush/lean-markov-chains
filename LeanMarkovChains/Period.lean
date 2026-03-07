@@ -1,7 +1,7 @@
-import Mathlib
-import Mathlib.Data.Nat.GCD.Basic
-import LeanMarkovChains.Basic
 import LeanMarkovChains.Irreducible
+import Mathlib.Algebra.Order.Ring.Star
+import Mathlib.Data.Int.Star
+import Mathlib.NumberTheory.FrobeniusNumber
 
 universe u
 
@@ -76,3 +76,5 @@ theorem IsAperiodic.irreducible_period_one_implies_aperiodic {M : MarkovChain α
   exact MarkovChain.irreducible_same_periods hIrred y x
 
 end MarkovChain
+
+#min_imports

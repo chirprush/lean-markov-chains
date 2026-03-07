@@ -16,3 +16,8 @@ rev = "v4.27.0-rc1"
 
 [[lean_lib]]
 name = "LeanMarkovChains"
+
+[[lean_exe]]
+name = "relevant"
+root = "Relevant"
+supportInterpreter = true

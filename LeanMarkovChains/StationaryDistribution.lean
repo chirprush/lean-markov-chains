@@ -1,6 +1,3 @@
-import Mathlib
-import LeanMarkovChains.Basic
-import LeanMarkovChains.Irreducible
 import LeanMarkovChains.Period
 
 universe u
@@ -70,7 +67,7 @@ theorem irreducible_positive_stationary {M : MarkovChain α} {p : ProbDistributi
 -- For a positive, stochastive matrix, there is a stochastic vector that is an
 -- eigenvector for 1
 -- Maybe restate this so it's more ergonomic in the following theorem that uses
--- it? Like maybe I wanto just bundle P into its own Markov Chain?
+-- it? Like maybe I want to just bundle P into its own Markov Chain?
 -- TODO: Look into this more once I have to prove this
 lemma positive_exists_stochastic_eigenvector {P : Matrix α α ℝ}
   (hPos : P.IsPositive) (hRowSum : P.IsRowSumOne) :

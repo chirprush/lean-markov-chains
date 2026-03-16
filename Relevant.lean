@@ -70,9 +70,9 @@ def debugAST (a : AST) (level := 0) : String :=
     | .ident name => s!"{name}"
     | .sort => s!"sort"
     | .apply fn args =>
-      let argStrings := List.map debugAST args
-      s!"({debugAST fn} {" ".intercalate argStrings})"
-    | .proj value idx => s!"{debugAST value}.{idx}"
+      let argStrings := List.map (debugAST · level) args
+      s!"({debugAST fn level} {" ".intercalate argStrings})"
+    | .proj value idx => s!"{debugAST value level}.{idx}"
     | .letin type value body => s!"(let `{level} : {debugAST type level} := {debugAST value level}; {debugAST body (level + 1)})"
     | .lambda type body => s!"(λ `{level} : {debugAST type level}, {debugAST body (level + 1)})"
     | .universal type body => s!"(∀ `{level} : {debugAST type level}, {debugAST body (level + 1)})"
